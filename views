@@ -4,7 +4,7 @@ import csv
 #credentials
 subdomain = 'd3v-altrd'
 username = 'angela@altrd.org'
-api_token = 'zF9IuoM7PiiM1VlEpgRMdHbqMEYspNfjepFWRkol'
+api_token = 'token'
 auth = (username + '/token', api_token)
 
 # Set up the URL for the API request
