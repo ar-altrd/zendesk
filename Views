@@ -1,0 +1,57 @@
+import requests
+import csv
+
+#credentials
+subdomain = 'd3v-altrd'
+username = 'angela@altrd.org'
+api_token = 'token'
+auth = (username + '/token', api_token)
+
+# Set up the URL for the API request
+view_id = 7992566476955
+url = f'https://{subdomain}.zendesk.com/api/v2/views/{view_id}/tickets.json'
+
+# Create a CSV file
+with open('tickets.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    writer = csv.writer(csvfile)
+
+    header = ['id', 'created_at', 'updated_at', 'url', 'type', 'subject', 'description', 'priority', 'status', 'requester_id', 'assignee_id', 'organization_id', 'group_id', 'collaborator_ids', 'tags', 'custom_fields', 'satisfaction_rating', 'via', 'external_id', 'received_at', 'allow_channelback', 'is_public', 'comments']
+    writer.writerow(header)
+
+
+    page = 1
+    while True:
+        tickets = [response(next_page=page)]
+        if not tickets:
+            break
+
+        # Loop through the tickets and write the data to the CSV file
+        for ticket in tickets:
+            writer.writerow([
+                ticket.id,
+                ticket.created_at,
+                ticket.updated_at,
+                ticket.url,
+                ticket.type,
+                ticket.subject,
+                ticket.description,
+                ticket.priority,
+                ticket.status,
+                ticket.requester_id,
+                ticket.assignee_id,
+                ticket.organization_id,
+                ticket.group_id,
+                ticket.collaborator_ids,
+                ticket.tags,
+                ticket.custom_fields,
+                ticket.satisfaction_rating,
+                ticket.via,
+                ticket.external_id,
+                ticket.received_at,
+                ticket.allow_channelback,
+                ticket.is_public,
+                ticket.comments
+            ])
+
+        # Increment the page counter
+        page += 1
